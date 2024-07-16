@@ -1,0 +1,33 @@
+.maze-component {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    position: relative;
+}
+
+.maze-component > .back { position: absolute; right: 20px; top: 10px; }
+
+.maze-component > .empty {
+    border: solid 2px #ccc;
+    border-radius: 4px;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.maze-component > .maze .path {
+    align-items: center;
+    border-radius: 4px;
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    margin: 5px;
+    width: 60px;
+}
+
+.maze-component > .maze .path.current { box-shadow: 0 0 2px 2px rgba(57, 110, 126, 0.5); }
+
+.maze-component > .maze .path.go { background-color: lightgreen; }
+.maze-component > .maze .path.no-go { background-color: lightcoral; }
+.maze-component > .maze .path.start { background-color: lightblue; }
+.maze-component > .maze .path.end { background-color: lightgoldenrodyellow; }

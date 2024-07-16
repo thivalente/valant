@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoggingService } from './logging/logging.service';
-import { StuffService } from './stuff/stuff.service';
+import { MazeService } from './pages/maze/maze.service';
 
 @Component({
   selector: 'valant-root',
@@ -8,24 +8,12 @@ import { StuffService } from './stuff/stuff.service';
   styleUrls: ['./app.component.less'],
 })
 export class AppComponent implements OnInit {
-  public title = 'Valant demo';
+  public title = 'Thiago Valente demo';
   public data: string[];
 
-  constructor(private logger: LoggingService, private stuffService: StuffService) {}
+  constructor(private logger: LoggingService, private stuffService: MazeService) {}
 
   ngOnInit() {
-    this.logger.log('Welcome to the AppComponent');
-    this.getStuff();
-  }
-
-  private getStuff(): void {
-    this.stuffService.getStuff().subscribe({
-      next: (response: string[]) => {
-        this.data = response;
-      },
-      error: (error) => {
-        this.logger.error('Error getting stuff: ', error);
-      },
-    });
+    this.logger.log('Welcome to the Maze Demo');
   }
 }

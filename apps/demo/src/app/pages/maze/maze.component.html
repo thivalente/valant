@@ -1,0 +1,20 @@
+<div class="maze-component">
+    <button class="btn btn-default back" [routerLink]="['']">Go back</button>
+
+    <div class="empty" *ngIf="mazeList.length === 0">
+        <p>The maze is empty</p>
+    </div>
+
+    <div class="maze" *ngFor="let row of mazeList; index as rowIndex">
+        <div *ngFor="let column of row; index as columnIndex">
+            <div class="path" [ngClass]="{ 
+                'go': column === mazeStatus.Go,
+                'no-go': column === mazeStatus.NotGo,
+                'start': column === mazeStatus.Start,
+                'end': column === mazeStatus.End,
+                'current': current.row === rowIndex && current.column === columnIndex }">
+                {{ column }}
+            </div>
+        </div>
+    </div>
+</div>

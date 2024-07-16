@@ -1,15 +1,15 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { StuffService } from './stuff.service';
+import { MazeService } from './maze.service';
 
-describe('StuffService', () => {
-  let service: StuffService;
+describe('MazeService', () => {
+  let service: MazeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(StuffService);
+    service = TestBed.inject(MazeService);
   });
 
   it('should be created', () => {
