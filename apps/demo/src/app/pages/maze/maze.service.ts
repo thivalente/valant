@@ -11,7 +11,7 @@ import { blobToText, throwException } from '../../_utils/utils';
   providedIn: 'root',
 })
 export class MazeService {
-  private _domain: string = 'maze';
+  private _domain: string = 'mazes';
 
   constructor(private valiantClient: ValantDemoApiClient.Client) {}
 

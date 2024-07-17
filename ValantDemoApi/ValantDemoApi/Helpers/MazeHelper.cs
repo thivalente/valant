@@ -4,7 +4,7 @@ namespace ValantDemoApi.Helpers
 {
     public static class MazeHelper
     {
-        public const int MazeSize = 10;
+        public const int MazeSize = 6;
 
         public static string ToInitial(this MazeStatusEnum status)
         {

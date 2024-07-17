@@ -8,7 +8,7 @@ using ValantDemoApi.Models.Responses;
 namespace ValantDemoApi.Controllers
 {
     [ApiController]
-    [Route("maze")]
+    [Route("mazes")]
     public class MazeController : ControllerBase
     {
         private readonly IMazeService _mazeService;
@@ -24,14 +24,6 @@ namespace ValantDemoApi.Controllers
         public IActionResult GetMaze()
         {
             var maze = this._mazeService.Get();
-
-            return Ok(ApiResponse<List<List<string>>>.SuccessResult(HttpStatusCode.OK, maze));
-        }
-
-        [HttpGet("random")]
-        public IActionResult GetRandomMaze()
-        {
-            var maze = this._mazeService.GetRandom();
 
             return Ok(ApiResponse<List<List<string>>>.SuccessResult(HttpStatusCode.OK, maze));
         }

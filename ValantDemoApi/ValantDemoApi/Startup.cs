@@ -28,8 +28,13 @@ namespace ValantDemoApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Valant Demo Api - Thiago Valente", Version = "v1" });
             });
 
-            services.AddScoped<IMazeService, MazeService>();
-            services.AddScoped<IMazeRepository, MazeRepository>();
+            services
+                .AddScoped<IMazeService, MazeService>()
+                .AddScoped<IPersonalRecordService, PersonalRecordService>();
+
+            services
+                .AddScoped<IMazeRepository, MazeRepository>()
+                .AddScoped<IPersonalRecordRepository, PersonalRecordRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
