@@ -73,7 +73,7 @@ namespace ValantDemoApi.Controllers
             return Ok(ApiResponse<MazeResponseModel>.SuccessResult(HttpStatusCode.OK, response));
         }
 
-        [HttpGet("is-valid/{row:int}/{column:int}/")]
+        [HttpGet("is-valid/{row:int}/{column:int}")]
         public IActionResult IsValidStep(int row, int column)
         {
             var isValid = this._mazeService.IsValidStep(row, column);
