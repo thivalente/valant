@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
 import { LoggingService } from './logging/logging.service';
 import { SilentLogger } from './logging/silent-logger';
-import { StuffService } from './stuff/stuff.service';
+import { MazeService } from './pages/maze/maze.service';
 
 const mockStuffService = { getStuff: jest.fn(() => of([])) };
 
@@ -13,7 +13,7 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     component = new Shallow(AppComponent, AppModule)
-      .provideMock({ provide: StuffService, useValue: mockStuffService })
+      .provideMock({ provide: MazeService, useValue: mockStuffService })
       .provideMock({ provide: LoggingService, useClass: SilentLogger });
     jest.clearAllMocks();
   });
