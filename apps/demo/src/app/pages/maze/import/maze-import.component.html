@@ -1,0 +1,32 @@
+<div class="maze-import">
+    <header>
+        Import a new Maze
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input id="name" formControlName="name" class="input-control" #nameInput />
+
+          <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)" class="is-invalid">
+            <div *ngIf="form.get('name').errors.required">Name is required.</div>
+            <div *ngIf="form.get('name').errors.maxlength">Name cannot be more than 20 characters.</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="file">File:</label>
+            <input type="file" id="file" #fileInput accept=".txt" (change)="onFileChange($event)" class="custom-file-input">
+            <button type="button" class="btn btn-default" (click)="triggerFileInput()">Choose File</button>
+            <span *ngIf="fileName" class="file-name">{{ fileName }}</span>
+            <div *ngIf="form.get('file').invalid && (form.get('file').dirty || form.get('file').touched)" class="is-invalid">
+                <div *ngIf="form.get('file').errors.required">A file is required.</div>
+                <div *ngIf="form.get('file').errors.invalidFileType">Only .txt files are allowed.</div>
+            </div>
+        </div>
+        
+        <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Import</button>
+        &nbsp;
+        <button type="button" class="btn btn-default" [routerLink]="['/maze']">Go back</button>
+    </form>
+</div>

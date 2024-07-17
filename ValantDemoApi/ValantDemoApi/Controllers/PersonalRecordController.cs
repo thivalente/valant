@@ -25,7 +25,7 @@ namespace ValantDemoApi.Controllers
         [HttpPost]
         public IActionResult Add(PersonaRecordRequestModel personalRecord)
         {
-            var result = this._personalRecordService.Add(personalRecord.TotalSeconds);
+            var result = this._personalRecordService.Add(personalRecord.TotalMistakes, personalRecord.TotalSeconds);
             var response = result.ToResponseModel();
 
             return Ok(ApiResponse<PersonaRecordResponseModel>.SuccessResult(HttpStatusCode.Created, response));

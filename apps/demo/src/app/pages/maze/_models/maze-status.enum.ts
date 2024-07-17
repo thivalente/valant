@@ -1,6 +1,6 @@
 export enum MazeStatusEnum {
     Start = 'S',
-    Go = 'G',
-    NotGo = 'N',
+    Go = 'O',
+    NotGo = 'X',
     End = 'E',
 }

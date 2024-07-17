@@ -1,6 +1,4 @@
-using System;
-
 namespace ValantDemoApi.Models.Requests
 {
-    public record PersonaRecordRequestModel(int TotalSeconds);
+    public record PersonaRecordRequestModel(int TotalMistakes, int TotalSeconds);
 }

@@ -1,11 +1,11 @@
 import { Observable, throwError } from "rxjs";
-import { ValantDemoApiClient } from "../api-client/api-client";
+import { ApiException } from "../api-client/api-exception.model";
 
 export const throwException = (message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> => {
     if (result !== null && result !== undefined)
         return throwError(result);
     else
-        return throwError(new ValantDemoApiClient.ApiException(message, status, response, headers, null));
+        return throwError(new ApiException(message, status, response, headers, null));
 }
 
 export const blobToText = (blob: any): Observable<string> => {

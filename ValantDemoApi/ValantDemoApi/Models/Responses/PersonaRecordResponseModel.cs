@@ -2,9 +2,9 @@ using System;
 
 namespace ValantDemoApi.Models.Requests
 {
-    public record PersonaRecordResponseModel(Guid Id, DateTime CreationDate, int TotalSeconds)
+    public record PersonaRecordResponseModel(Guid Id, DateTime CreationDate, int TotalMistakes, int TotalSeconds)
     {
-        public string FormattedRecords
+        public string FormattedTime
         {
             get
             {

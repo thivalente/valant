@@ -1,20 +1,91 @@
 <div class="maze-component">
-    <button class="btn btn-default back" [routerLink]="['']">Go back</button>
+    <header>
+        <button class="btn btn-default back" [routerLink]="['']">Go back</button>
+    </header>
 
-    <div class="empty" *ngIf="mazeList.length === 0">
-        <p>The maze is empty</p>
-    </div>
+    <div class="main-container">
+        <section class="sidebar">
+            <div class="my-mazes">
+                <label>My mazes</label>
+                <select class="custom-select" [(ngModel)]="selectedMazeId" (change)="selectMaze()">
+                    <option disabled [value]="''" selected>{{ myMazes.length === 0 ? 'Import a maze' : 'Select a maze' }}</option>
+                    <option *ngFor="let maze of myMazes" [value]="maze.id">{{maze.name}}</option>
+                </select>
 
-    <div class="maze" *ngFor="let row of mazeList; index as rowIndex">
-        <div *ngFor="let column of row; index as columnIndex">
-            <div class="path" [ngClass]="{ 
-                'go': column === mazeStatus.Go,
-                'no-go': column === mazeStatus.NotGo,
-                'start': column === mazeStatus.Start,
-                'end': column === mazeStatus.End,
-                'current': current.row === rowIndex && current.column === columnIndex }">
-                {{ column }}
+                <button class="btn btn-secondary" [routerLink]="['new']">Import a new maze</button>
             </div>
-        </div>
+
+            <button class="btn btn-primary" (click)="selectRandomMaze()">Select a random maze</button>
+
+            <div>
+                <button class="btn btn-primary" (click)="start()" [disabled]="state !== stateEnum.Loaded">Start</button>
+                &nbsp;
+                <button class="btn btn-secondary" (click)="toogleMazeVisibility(true)" [disabled]="state !== stateEnum.Started">Show Maze</button>
+                <br />
+                <small *ngIf="state === stateEnum.Loaded">Press start!</small>
+            </div>
+
+            <div class="countdown" *ngIf="state >= stateEnum.Loaded">
+                <div class="counting" *ngIf="countdown > 0 && state < stateEnum.Completed">
+                    <label>Are you ready?!</label>
+                    <span>{{ countdown }}</span>
+                </div>
+                <div class="go" *ngIf="countdown <= 0 && state !== stateEnum.Completed">
+                    GO!
+                    <label>Press the arrow keys to walk through the maze</label>
+                </div>
+                <div class="congratulations" *ngIf="state === stateEnum.Completed">
+                    Congratulations!!!
+                    <label>Select a new maze to play again</label>
+                </div>
+            </div>
+        </section>
+    
+        <section class="maze-container">
+            <div class="empty" *ngIf="mazeList.length === 0">
+                <p>The maze is empty</p>
+            </div>
+        
+            <div class="maze-group" *ngIf="mazeList.length > 0">
+                <div class="maze" *ngFor="let row of mazeList; index as rowIndex">
+                    <div *ngFor="let column of row; index as columnIndex">
+                        <div class="path" [ngClass]="{
+                            'hidden': !column.walked,
+                            'go': column.step === mazeStatusEnum.Go,
+                            'no-go': column.step === mazeStatusEnum.NotGo,
+                            'start': column.step === mazeStatusEnum.Start,
+                            'end': column.step === mazeStatusEnum.End,
+                            'current': current.row === rowIndex && current.column === columnIndex }">
+                            {{ column.step }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="maze-info">
+                <div class="time-info" *ngIf="mazeList.length > 0">
+                    <label>Time Lapsed: <span class="timer">{{ minutes }}:{{ seconds }}</span></label>
+                    <label>Mistakes: <span>{{mistakes}}</span></label>
+                </div>
+                <div class="records">
+                    <label><b>Top 5 Best Time Personal Records</b></label>
+                    <div class="records-grid">
+                        <div *ngFor="let record of records; let index = index" class="row-{{index+1}}">
+                            <div class="position">
+                                <label>{{index + 1}}º</label>
+                            </div>
+                            <div class="info">
+                                <label>When: <span>{{record.creationDate | date:'dd/MM/yyyy HH:mm'}}</span></label>
+                                <label>Time: <span>{{record.formattedTime}}</span></label>
+                                <label>Mistakes: <span>{{record.totalMistakes}}</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="empty" *ngIf="records.length === 0">
+                        <p>No record registered</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>

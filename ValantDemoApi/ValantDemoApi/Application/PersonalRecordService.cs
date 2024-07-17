@@ -7,7 +7,7 @@ namespace ValantDemoApi.Application
 {
     public interface IPersonalRecordService
     {
-        PersonaRecord Add(int totalSeconds);
+        PersonaRecord Add(int totalMistakes, int totalSeconds);
         List<PersonaRecord> GetAll();
         List<PersonaRecord> GetTop5();
         void RemoveAll();
@@ -22,9 +22,9 @@ namespace ValantDemoApi.Application
             this._personalRecordRepository = personalRecordRepository;
         }
 
-        public PersonaRecord Add(int totalSeconds)
+        public PersonaRecord Add(int totalMistakes, int totalSeconds)
         {
-            return this._personalRecordRepository.Add(totalSeconds);
+            return this._personalRecordRepository.Add(totalMistakes, totalSeconds);
         }
 
         public List<PersonaRecord> GetAll()
@@ -36,7 +36,7 @@ namespace ValantDemoApi.Application
         {
             var records = this._personalRecordRepository.GetAll();
 
-            return records.OrderBy(r => r.TotalSeconds).Take(5).ToList();
+            return records.OrderBy(r => r.TotalSeconds).ThenBy(r => r.TotalMistakes).Take(5).ToList();
         }
 
         public void RemoveAll()

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NUnit.Framework;
+using System;
 using ValantDemoApi.Domain;
+using ValantDemoApi.Helpers;
 
 namespace ValantDemoApi.Tests.Domain
 {
@@ -9,24 +9,41 @@ namespace ValantDemoApi.Tests.Domain
     public class MazeTests
     {
         [Test]
+        public void MazeInitialization_ShouldHaveBetween3And10Size()
+        {
+            var maze = Maze.CreateRandomMaze();
+
+            Assert.IsNotNull(maze);
+            Assert.GreaterOrEqual(maze.Path.Count, MazeHelper.MazeMinSize);
+            Assert.LessOrEqual(maze.Path.Count, MazeHelper.MazeMaxSize);
+
+            var totalRows = maze.Path.Count;
+
+            foreach (var row in maze.Path)
+            {
+                Assert.IsTrue(row.Count == totalRows);
+            }
+        }
+
+        [Test]
         public void MazeInitialization_ShouldSetStartPosition()
         {
-            var maze = Maze.CreateMaze();
+            var maze = Maze.CreateRandomMaze();
 
-            Assert.AreEqual("S", maze.Path[0][0]);
+            Assert.AreEqual(MazeStatusEnum.Start.ToInitial(), maze.Path[0][0]);
         }
 
         [Test]
         public void MazeInitialization_ShouldHaveOneEndPosition()
         {
-            var maze = Maze.CreateMaze();
+            var maze = Maze.CreateRandomMaze();
             int endCount = 0;
 
             for (int i = 0; i < maze.Path.Count; i++)
             {
                 for (int j = 0; j < maze.Path[i].Count; j++)
                 {
-                    if (maze.Path[i][j] == "E")
+                    if (maze.Path[i][j] == MazeStatusEnum.End.ToInitial())
                     {
                         endCount++;
                     }
@@ -39,14 +56,14 @@ namespace ValantDemoApi.Tests.Domain
         [Test]
         public void MazeInitialization_EndPosition_ShouldNotBeAdjacentToStart()
         {
-            var maze = Maze.CreateMaze();
+            var maze = Maze.CreateRandomMaze();
             bool isAdjacent = false;
 
             for (int i = 0; i < maze.Path.Count; i++)
             {
                 for (int j = 0; j < maze.Path[i].Count; j++)
                 {
-                    if (maze.Path[i][j] == "E")
+                    if (maze.Path[i][j] == MazeStatusEnum.End.ToInitial())
                     {
                         if (Math.Abs(i - 0) <= 1 && Math.Abs(j - 0) <= 1)
                         {
@@ -62,14 +79,14 @@ namespace ValantDemoApi.Tests.Domain
         [Test]
         public void MazeInitialization_ShouldContainBlockedPositions()
         {
-            var maze = Maze.CreateMaze();
+            var maze = Maze.CreateRandomMaze();
             bool hasBlocked = false;
 
             for (int i = 0; i < maze.Path.Count; i++)
             {
                 for (int j = 0; j < maze.Path[i].Count; j++)
                 {
-                    if (maze.Path[i][j] == "N")
+                    if (maze.Path[i][j] == MazeStatusEnum.NotGo.ToInitial())
                     {
                         hasBlocked = true;
                     }
@@ -82,36 +99,10 @@ namespace ValantDemoApi.Tests.Domain
         [Test]
         public void Maze_ShouldHavePathFromStartToEnd()
         {
-            var maze = Maze.CreateMaze();
-            bool[,] visited = new bool[maze.Path.Count, maze.Path[0].Count];
-            Stack<(int, int)> stack = new Stack<(int, int)>();
-            stack.Push((0, 0));
+            var maze = Maze.CreateRandomMaze();
+            var hasValidPath = maze.HasValidPath();
 
-            bool pathExists = false;
-
-            while (stack.Count > 0)
-            {
-                var (x, y) = stack.Pop();
-
-                if (x < 0 || y < 0 || x >= maze.Path.Count || y >= maze.Path[0].Count || visited[x, y] || maze.Path[x][y] == "N")
-                    continue;
-
-                if (maze.Path[x][y] == "E")
-                {
-                    pathExists = true;
-                    break;
-                }
-
-                visited[x, y] = true;
-
-                // Push adjacent cells to the stack
-                stack.Push((x + 1, y));
-                stack.Push((x - 1, y));
-                stack.Push((x, y + 1));
-                stack.Push((x, y - 1));
-            }
-
-            Assert.True(pathExists);
+            Assert.True(hasValidPath);
         }
     }
 }

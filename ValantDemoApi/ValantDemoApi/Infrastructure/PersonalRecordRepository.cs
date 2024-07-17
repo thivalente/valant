@@ -5,7 +5,7 @@ namespace ValantDemoApi.Infrastructure
 {
     public interface IPersonalRecordRepository
     {
-        PersonaRecord Add(int totalSeconds);
+        PersonaRecord Add(int totalMistakes, int totalSeconds);
         List<PersonaRecord> GetAll();
         void RemoveAll();
     }
@@ -14,9 +14,9 @@ namespace ValantDemoApi.Infrastructure
     {
         private static List<PersonaRecord> _personalRecords = new();
 
-        public PersonaRecord Add(int totalSeconds)
+        public PersonaRecord Add(int totalMistakes, int totalSeconds)
         {
-            var newPersonalRecord = new PersonaRecord(totalSeconds);
+            var newPersonalRecord = new PersonaRecord(totalMistakes, totalSeconds);
 
             if (_personalRecords is null)
                 _personalRecords = new();

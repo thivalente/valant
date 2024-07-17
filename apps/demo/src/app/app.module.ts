@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { LoggingService } from './logging/logging.service';
@@ -10,6 +11,7 @@ import { ValantDemoApiClient } from './api-client/api-client';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/homecomponent';
 import { MazeComponent } from './pages/maze/maze.component';
+import { MazeImportComponent } from './pages/maze/import/maze-import.component';
 
 import { environment } from '../environments/environment';
 
@@ -21,12 +23,15 @@ export function getBaseUrl(): string {
   declarations: [
     AppComponent,
     HomeComponent,
-    MazeComponent
+    MazeComponent,
+    MazeImportComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [
     LoggingService,

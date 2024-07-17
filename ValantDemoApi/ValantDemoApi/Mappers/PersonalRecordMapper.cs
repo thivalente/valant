@@ -10,7 +10,7 @@ namespace ValantDemoApi.Mappers
             if (personaRecord is null)
                 return null;
 
-            return new PersonaRecordResponseModel(personaRecord.Id, personaRecord.CreationDate, personaRecord.TotalSeconds);
+            return new PersonaRecordResponseModel(personaRecord.Id, personaRecord.CreationDate, personaRecord.TotalMistakes, personaRecord.TotalSeconds);
         }
     }
 }
